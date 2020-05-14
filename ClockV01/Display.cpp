@@ -66,6 +66,7 @@ void Display::testPrint(const char* str)
     tft.fillRect(x1, y1, (int16_t)w, (int16_t)h, ILI9341_CYAN);
     tft.setTextColor(ILI9341_BLACK);
     tft.print(str);
+    tft.setTextColor(ILI9341_WHITE);
 }
 
 void Display::print(const char* str)

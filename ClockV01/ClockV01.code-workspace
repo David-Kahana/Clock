@@ -7,5 +7,10 @@
 			"name": "Clock",
 			"path": ".."
 		}
-	]
+	],
+	"settings": {
+		"files.associations": {
+			"random": "cpp"
+		}
+	}
 }
