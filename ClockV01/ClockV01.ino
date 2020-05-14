@@ -9,7 +9,8 @@ WifiWrapper wifi;
 uint8_t totalNetworks = 0;
 int8_t highlighted = 0;
 uint8_t first = 0;
-uint8_t last = 9;
+uint8_t totalLines = 9;
+uint8_t last = totalLines;
 
 void setup()
 {
@@ -20,7 +21,7 @@ void setup()
   disp.textSetup();
   delay(100);
   Serial.println(F("Dispaly Setup done"));
-  
+
   wifi.setupScan();
   Serial.println("wifi setupScan done");
   Serial.println("scan start");
@@ -31,8 +32,8 @@ void setup()
   disp.print(" done\n");
   if (totalNetworks == 0)
   {
-      Serial.println("no networks found");
-      disp.print("no networks found\n");
+    Serial.println("no networks found");
+    disp.print("no networks found\n");
   }
   else
   {
@@ -43,8 +44,9 @@ void setup()
       line = wifi.getSSID(i);
       Serial.print(line);
       delay(5);
-      }
-      displayHighlight(totalNetworks, 0);
+    }
+    last = _min(totalNetworks, totalLines);
+    displayNets(totalNetworks, highlighted, first, last);
   }
 
   keyboard = PS2Controller.keyboard();
@@ -57,18 +59,10 @@ void loop(void)
 {
   if (keyboard->virtualKeyAvailable())
   {
-    //disp.clearScreen(ILI9341_DARKGREEN);
     // ascii mode (show ASCII and VirtualKeys)
     vKey = keyboard->getNextVirtualKey(&keyDown);
     if (vKey == fabgl::VirtualKey::VK_UP && !keyDown)
     {
-      //disp.print("UP!!!");
-      // highlighted--;
-      // if (highlighted < 0)
-      // {
-      //   highlighted = 0;
-      // }
-      // displayNets(totalNetworks, highlighted, first, last);
       moveUp();
     }
     if (vKey == fabgl::VirtualKey::VK_DOWN && !keyDown)
@@ -89,6 +83,16 @@ void moveDown()
     line = wifi.getSSID(highlighted - 1);
     disp.printAtUH(highlighted - first, line);
   }
+  else
+  {
+    if (highlighted < totalNetworks - 1)
+    {
+      last++;
+      first++;
+      highlighted++;
+      displayNets(totalNetworks, highlighted, first, last);
+    }
+  }
 }
 
 void moveUp()
@@ -101,6 +105,16 @@ void moveUp()
     disp.printAtH(highlighted - first + 1, line);
     line = wifi.getSSID(highlighted + 1);
     disp.printAtUH(highlighted - first + 2, line);
+  }
+  else
+  {
+    if (highlighted > 0)
+    {
+      first--;
+      last--;
+      highlighted--;
+      displayNets(totalNetworks, highlighted, first, last);
+    }
   }
 }
 
@@ -115,33 +129,11 @@ void displayNets(uint8_t total, int8_t highlight, uint8_t firstLine, uint8_t las
     line = wifi.getSSID(i);
     if (i == (uint8_t)highlight)
     {
-      disp.testPrint(line);
+      disp.printAtH(highlight - firstLine + 1, line);
     }
     else
     {
       disp.print(line);
     }
-    //delay(5);
-  }
-}
-
-void displayHighlight(uint8_t total, int8_t highlight)
-{
-  char *line;
-  disp.clearScreen(ILI9341_BLACK);
-  disp.print(total);
-  disp.print(" networks found\n");
-  for (uint8_t i = 0; i < total; ++i)
-  {
-    line = wifi.getSSID(i);
-    if (i == (uint8_t)highlight)
-    {
-      disp.testPrint(line);
-    }
-    else
-    {
-      disp.print(line);
-    }
-    //delay(5);
   }
 }

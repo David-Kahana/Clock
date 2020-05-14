@@ -5,7 +5,6 @@
 class WifiWrapper
 {
 private:
-
 public:
     char charBuf[38] = "";
     void setupScan();
