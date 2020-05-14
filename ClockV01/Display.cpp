@@ -69,6 +69,31 @@ void Display::testPrint(const char* str)
     tft.setTextColor(ILI9341_WHITE);
 }
 
+void Display::printAtH(uint8_t lineNumber, const char *str)
+{
+    int16_t y, x1, y1;
+    uint16_t w, h;
+    y = textHeight + (textHeight + 10) * (lineNumber);
+    tft.setCursor(0, y);
+    tft.getTextBounds(str, 0, y, &x1, &y1, &w, &h);
+    tft.fillRect(x1, y1, (int16_t)w, (int16_t)h, ILI9341_CYAN);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(str);
+    tft.setTextColor(ILI9341_WHITE);
+}
+
+void Display::printAtUH(uint8_t lineNumber, const char *str)
+{
+    int16_t y, x1, y1;
+    uint16_t w, h;
+    y = textHeight + (textHeight + 10) * (lineNumber);
+    tft.setCursor(0, y);
+    tft.getTextBounds(str, 0, y, &x1, &y1, &w, &h);
+    tft.fillRect(x1, y1, (int16_t)w, (int16_t)h, ILI9341_BLACK);
+    tft.setTextColor(ILI9341_WHITE);
+    tft.print(str);
+}
+
 void Display::print(const char* str)
 {
     tft.print(str);

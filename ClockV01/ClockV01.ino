@@ -7,6 +7,10 @@ fabgl::Keyboard *keyboard = nullptr;
 Display disp;
 WifiWrapper wifi;
 uint8_t totalNetworks = 0;
+int8_t highlighted = 0;
+uint8_t first = 0;
+uint8_t last = 9;
+
 void setup()
 {
   Serial.begin(115200);
@@ -48,7 +52,6 @@ void setup()
 
 bool keyDown;
 fabgl::VirtualKey vKey;
-int8_t highlighted = 0;
 
 void loop(void)
 {
@@ -60,34 +63,65 @@ void loop(void)
     if (vKey == fabgl::VirtualKey::VK_UP && !keyDown)
     {
       //disp.print("UP!!!");
-      highlighted--;
-      if (highlighted < 0)
-      {
-        highlighted = 0;
-      }
-      displayHighlight(totalNetworks, highlighted);
+      // highlighted--;
+      // if (highlighted < 0)
+      // {
+      //   highlighted = 0;
+      // }
+      // displayNets(totalNetworks, highlighted, first, last);
+      moveUp();
     }
     if (vKey == fabgl::VirtualKey::VK_DOWN && !keyDown)
     {
-      //disp.print("DOWN!!!");
-      highlighted++;
-      if (highlighted > 8)
-      {
-        highlighted = 8;
-      }
-      displayHighlight(totalNetworks, highlighted);
+      moveDown();
     }
-    // Serial.printf("VirtualKey = %s", keyboard->virtualKeyToString(vKey));
-    // int c = keyboard->virtualKeyToASCII(vKey);
-    // if (c > -1)
-    // {
-    //   Serial.printf("  ASCII = 0x%02X   ", c);
-    //   if (c >= ' ')
-    //     Serial.write(c);
-    // }
-    // if (!keyDown)
-    //   Serial.write(" UP");
-    // Serial.write('\n');
+  }
+}
+
+void moveDown()
+{
+  char *line;
+  if (highlighted < last - 1)
+  {
+    highlighted++;
+    line = wifi.getSSID(highlighted);
+    disp.printAtH(highlighted - first + 1, line);
+    line = wifi.getSSID(highlighted - 1);
+    disp.printAtUH(highlighted - first, line);
+  }
+}
+
+void moveUp()
+{
+  char *line;
+  if (highlighted > first)
+  {
+    highlighted--;
+    line = wifi.getSSID(highlighted);
+    disp.printAtH(highlighted - first + 1, line);
+    line = wifi.getSSID(highlighted + 1);
+    disp.printAtUH(highlighted - first + 2, line);
+  }
+}
+
+void displayNets(uint8_t total, int8_t highlight, uint8_t firstLine, uint8_t lastLine)
+{
+  char *line;
+  disp.clearScreen(ILI9341_BLACK);
+  disp.print(total);
+  disp.print(" networks found\n");
+  for (uint8_t i = firstLine; i < lastLine; ++i)
+  {
+    line = wifi.getSSID(i);
+    if (i == (uint8_t)highlight)
+    {
+      disp.testPrint(line);
+    }
+    else
+    {
+      disp.print(line);
+    }
+    //delay(5);
   }
 }
 

@@ -48,6 +48,8 @@ public:
     void addLine(const char *str);
     void printLines(uint8_t start, uint8_t stop);
     void testPrint(const char *str);
+    void printAtH(uint8_t lineNumber, const char *str);
+    void printAtUH(uint8_t lineNumber, const char *str);
 
     void scrollY(uint16_t y);
     // Tests:
