@@ -1,6 +1,7 @@
 #include "Display.h"
 #include "WifiWrapper.h"
 #include <fabgl.h>
+#include "EncoderBtn.h"
 
 class MyClock
 {
@@ -23,9 +24,13 @@ private:
     uint8_t totalLines = 9;
     uint8_t last = totalLines;
 
+    //rotary encoder and button
+    static EncoderBtn enc;
+
 public:
     void setup();
     void inLoop();
+
 private:
     void moveUp();
     void moveDown();

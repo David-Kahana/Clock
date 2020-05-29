@@ -1,5 +1,7 @@
 #include "MyClock.h"
 
+EncoderBtn MyClock::enc;
+
 void MyClock::setup()
 {
     Keys.begin(GPIO_NUM_4, GPIO_NUM_32, true, true); // clk, dat
@@ -7,6 +9,8 @@ void MyClock::setup()
     disp.textSetup();
     delay(100);
     Serial.println(F("Dispaly Setup done"));
+
+    enc.setup([] { enc.readEncoder_ISR(); });
 
     wifi.setupScan();
     Serial.println("wifi setupScan done");
@@ -41,7 +45,6 @@ void MyClock::inLoop()
 {
     if (keyboard->virtualKeyAvailable())
     {
-        // ascii mode (show ASCII and VirtualKeys)
         vKey = keyboard->getNextVirtualKey(&keyDown);
         if (vKey == fabgl::VirtualKey::VK_UP && !keyDown)
         {
@@ -51,6 +54,14 @@ void MyClock::inLoop()
         {
             moveDown();
         }
+    }
+    if (enc.changedUp())
+    {
+        //moveUp();
+    }
+    if (enc.changedDown())
+    {
+        //moveDown();
     }
 }
 
