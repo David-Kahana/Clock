@@ -1,0 +1,50 @@
+IPS 9488 FT6236
+product presentation:
+3.5-inch color screen, support 65K color display, display rich color
+480X320 HD resolution, with capacitive touch function
+Using SPI serial bus, only a few IO to light up the display
+With an SD card slot for easy expansion experiments
+Provide a wealth of example programs
+Military-grade process standards, long-term and stable work
+Provide the underlying drive technical support
+Product Parameter
+Name/ parameter
+SKU
+Size: 3.5 inch
+Type: TFT
+Drive IC:ILI9488 ILI9486
+Resolution:480*320 pixel
+Module interface:4-wire SPI interface
+Effective display area (AA area):48.96x73.44(mm)
+Module PCB Bottom size:55.1x96.18(mm)
+VCC supply voltage:3.3V~5V
+Logical IO port voltage:3.3V(TTL)
+power dissipation:About 90mA
+Product weight:30(g)
+
+Number/ label/ pin description
+1/VCC-------- 3v3 ------Power Supply Input (3.3V~5V)
+2/GND-------- GND ------Power ground
+3/CS--------- 10  ------LCD chip selection
+4/RESET------ 04  ------LCD reset
+5/DC--------- 05  ------LCD Bus command / data selection
+6/SDI(MOSI)-- 11  ------LCD SPI Show the bus data input
+7/SCK-------- 12  ------LCD SPI Display the bus clock signal
+8/LED-------- 06  ------LCD Backlight control (high-level lighting)
+9/SDO(MISO)-- 13  ------LCD SPI Show the bus data input out
+10/NC/3V3
+11/CTP-SDA--- 08  ------Capacitive touch, and the data output
+12/CTP/SCL--- 09  ------Capacitive touch, and the clock signal
+13/CTP-INT--- 07  ------Capactive touch, interrupt signal
+14/CTP-RST--- 17  ------Capacacitive touch, chip signal
+
+SD
+
+1/SCS   (CS)  35  14  10
+2/SDI (MOSI)  36  15  11
+3/SDO (MISO)  37  16  13
+2/CLK	      38  18  12
+
+file transfer:
+
+ESPFMfGK 
