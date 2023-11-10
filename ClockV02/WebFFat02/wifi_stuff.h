@@ -3,8 +3,10 @@
 #include <ESPAsyncWebSrv.h>
 #include "webpages.h"
 
-const String default_ssid = "Knet2.4";
-const String default_wifipassword = "manuwlan";
+const String default_ssid = "KNET HOT";
+const String default_wifipassword = "VPkmTIfDVD";
+//const String default_ssid = "Knet2.4";
+//const String default_wifipassword = "manuwlan";
 const String default_httpuser = "admin";
 const String default_httppassword = "admin";
 const int default_webserverporthttp = 80;

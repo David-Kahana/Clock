@@ -39,8 +39,7 @@ void scan_i2c() {
   }
 }
 
-void timeFromRTC()
-{
+void timeFromRTC() {
   timeinfo.tm_year = myRTC.getYear() + 100;
   timeinfo.tm_mon = myRTC.getMonth(century) - 1;
   timeinfo.tm_mday = myRTC.getDate();
